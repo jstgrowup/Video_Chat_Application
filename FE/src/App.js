@@ -1,10 +1,9 @@
 
-import reactLogo from './assets/react.svg'
 import './App.css'
 import { Button } from "@mui/material"
 import { IconButton } from "@mui/material"
 import { TextField } from "@mui/material"
-import "./init"
+// import "./init"
 import PhoneIcon from '@mui/icons-material/Phone';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { CopyToClipboard } from "react-copy-to-clipboard"
@@ -25,22 +24,25 @@ function App() {
   const myVideo = useRef()
   const userVideo = useRef()
   const connectionRef = useRef()
+
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((str) => {
-      setStream(str)
-      myVideo.current.srcObject = str
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
+      setStream(stream)
+      myVideo.current.srcObject = stream
     })
+
     socket.on("me", (id) => {
       setMe(id)
-
     })
+
     socket.on("callUser", (data) => {
       setReceivingCall(true)
       setCaller(data.from)
       setName(data.name)
-      setCaller(data.signal)
+      setCallerSignal(data.signal)
     })
   }, [])
+
   const callUser = (id) => {
     const peer = new Peer({
       initiator: true,
@@ -56,15 +58,18 @@ function App() {
       })
     })
     peer.on("stream", (stream) => {
+
       userVideo.current.srcObject = stream
+
     })
     socket.on("callAccepted", (signal) => {
       setCallAccepted(true)
       peer.signal(signal)
     })
-    connectionRef.current = peer
 
+    connectionRef.current = peer
   }
+
   const answerCall = () => {
     setCallAccepted(true)
     const peer = new Peer({
@@ -72,22 +77,26 @@ function App() {
       trickle: false,
       stream: stream
     })
-
-    peer.on("signal", (data) => socket.emit("answerCall", { signal: data, to: caller }))
+    peer.on("signal", (data) => {
+      socket.emit("answerCall", { signal: data, to: caller })
+    })
     peer.on("stream", (stream) => {
       userVideo.current.srcObject = stream
     })
+
     peer.signal(callerSignal)
     connectionRef.current = peer
   }
+
   const leaveCall = () => {
     setCallEnded(true)
     connectionRef.current.destroy()
   }
+
   return (
-    <div className="App">
+    <>
       <h1 style={{ textAlign: "center", color: '#fff' }}>Zoomish</h1>
-      <div className="container">
+      <div className="container" style={{border:"1px solid black"}}>
         <div className="video-container">
           <div className="video">
             {stream && <video playsInline muted ref={myVideo} autoPlay style={{ width: "300px" }} />}
@@ -144,8 +153,8 @@ function App() {
           ) : null}
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
-export default App
+export default App;
