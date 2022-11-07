@@ -1,6 +1,7 @@
 
 import './App.css'
 import { Button } from "@mui/material"
+import { Box, Flex, SimpleGrid } from "@chakra-ui/react"
 import { IconButton } from "@mui/material"
 import { TextField } from "@mui/material"
 // import "./init"
@@ -96,18 +97,29 @@ function App() {
   return (
     <>
       <h1 style={{ textAlign: "center", color: '#fff' }}>Zoomish</h1>
-      <div className="container" style={{border:"1px solid black"}}>
-        <div className="video-container">
-          <div className="video">
+      <SimpleGrid columns={[1, 1, 2, 2]}  style={{ border: "2px solid red" }}>
+        <Flex  className="video-container" style={{ border: "4px solid black" }}>
+          <div  style={{ border: "4px solid black" }}>
             {stream && <video playsInline muted ref={myVideo} autoPlay style={{ width: "300px" }} />}
           </div>
-          <div className="video">
+          <div  style={{ border: "4px solid red" }}>
             {callAccepted && !callEnded ?
               <video playsInline ref={userVideo} autoPlay style={{ width: "300px" }} /> :
               null}
           </div>
+        </Flex>
+        <div style={{ border: "20px solid black" }}>
+          {receivingCall && !callAccepted ? (
+            <div className="caller">
+              <h1 >{name} is calling...</h1>
+              <Button variant="contained" color="primary" onClick={answerCall}>
+                Answer
+              </Button>
+            </div>
+          ) : null}
         </div>
-        <div className="myId">
+      </SimpleGrid>
+        <div style={{ border: "10px solid black" }} className="myId">
           <TextField
             id="filled-basic"
             label="Name"
@@ -142,17 +154,6 @@ function App() {
             {idToCall}
           </div>
         </div>
-        <div>
-          {receivingCall && !callAccepted ? (
-            <div className="caller">
-              <h1 >{name} is calling...</h1>
-              <Button variant="contained" color="primary" onClick={answerCall}>
-                Answer
-              </Button>
-            </div>
-          ) : null}
-        </div>
-      </div>
     </>
   )
 }
