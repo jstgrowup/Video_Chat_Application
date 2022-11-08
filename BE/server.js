@@ -1,8 +1,14 @@
 const { createServer } = require("http")
 const express = require("express")
 const app = express()
+const cors = require("cors")
 const { Server } = require("socket.io")
+const { default: App } = require("../FE/src/App")
 const mainServer = createServer(app)
+app.use(cors())
+app.get("/", (req, res) => {
+    res.send("server")
+})
 const io = new Server(mainServer, {
     cors: {
         origin: "*",
@@ -16,8 +22,8 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("callEnded")
     })
 
-    socket.on("callUser", (data) => {
-        io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
+    socket.on("callUser", ({ userToCall, signalData, from, name }) => {
+        io.to(userToCall).emit("callUser", { signal: signalData, from, name })
     })
 
     socket.on("answerCall", (data) => {

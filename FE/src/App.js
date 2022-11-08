@@ -1,7 +1,7 @@
 
 import './App.css'
 import { Button } from "@mui/material"
-import { Box, Flex, SimpleGrid } from "@chakra-ui/react"
+import { Box, Center, Flex, Heading, SimpleGrid } from "@chakra-ui/react"
 import { IconButton } from "@mui/material"
 import { TextField } from "@mui/material"
 // import "./init"
@@ -11,6 +11,9 @@ import { CopyToClipboard } from "react-copy-to-clipboard"
 import Peer from "simple-peer"
 import io from "socket.io-client"
 import { useEffect, useRef, useState } from 'react'
+import VideoPlayer from './components/VideoPlayer'
+import Options from './components/Options'
+import Notification from './components/Notification'
 const socket = io("http://localhost:8080")
 function App() {
   const [me, setMe] = useState("")
@@ -96,8 +99,16 @@ function App() {
 
   return (
     <>
-      <h1 style={{ textAlign: "center", color: '#fff' }}>Zoomish</h1>
-      <SimpleGrid columns={[1, 1, 2, 2]}  style={{ border: "2px solid red" }}>
+      <Center>
+
+        <Heading as='h1' size='4xl'>Zoom</Heading>
+      </Center>
+      <VideoPlayer />
+      <Options>
+        <Notification />
+      </Options>
+
+      {/* <SimpleGrid columns={[1, 1, 2, 2]}  style={{ border: "2px solid red" }}>
         <Flex  className="video-container" style={{ border: "4px solid black" }}>
           <div  style={{ border: "4px solid black" }}>
             {stream && <video playsInline muted ref={myVideo} autoPlay style={{ width: "300px" }} />}
@@ -118,8 +129,8 @@ function App() {
             </div>
           ) : null}
         </div>
-      </SimpleGrid>
-        <div style={{ border: "10px solid black" }} className="myId">
+      </SimpleGrid> */}
+      {/* <div style={{ border: "10px solid black" }} className="myId">
           <TextField
             id="filled-basic"
             label="Name"
@@ -153,7 +164,7 @@ function App() {
             )}
             {idToCall}
           </div>
-        </div>
+        </div> */}
     </>
   )
 }
