@@ -26,7 +26,7 @@ function Options({ children }) {
                             <Button onClick={leaveCall} width={"100%"} color={"white"} bg={"blue"} ><Flex gap={"4"}><PhoneIcon /> <Text>Hangup</Text> </Flex>  </Button>
 
                         ) : (
-                            <Button onClick={() => callUser(idToCall)} width={"100%"} color={"white"} bg={"blue"} ><Flex gap={"4"}><PhoneIcon /> <Text>Copy your ID</Text> </Flex>  </Button>
+                            <Button onClick={() => callUser(idToCall)} width={"100%"} color={"white"} bg={"blue"} ><Flex gap={"4"}><PhoneIcon /> <Text>Call</Text> </Flex>  </Button>
                         )
                     }
 

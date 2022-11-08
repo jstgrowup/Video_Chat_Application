@@ -21,8 +21,8 @@ const ContextProvider = ({ children }) => {
             .then((currentStream) => {
                 setStream(currentStream);
                 if (myVideo.current) {
-
                     myVideo.current.srcObject = currentStream;
+
                 }
             });
 
