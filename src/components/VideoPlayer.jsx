@@ -20,7 +20,7 @@ function VideoPlayer() {
       {
         callAccepted && !callEnded && (
           <Box p={["1", "4", "10", "20"]} >
-            <video playsInline muted ref={userVideo} autoPlay />
+            <video playsInline  ref={userVideo} autoPlay />
             <Heading>{call.name || "Name"}</Heading>
           </Box>
 

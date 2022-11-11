@@ -1,9 +1,9 @@
-import { io } from "socket.io-client"
-import Peer from "simple-peer"
-import { createContext, useEffect, useState } from "react"
-import { useRef } from "react"
-const SocketContext = createContext()
-const socket = io("https://videochatapplicationbe-production.up.railway.app/")
+import React, { createContext, useState, useRef, useEffect } from 'react';
+import { io } from 'socket.io-client';
+import Peer from 'simple-peer';
+
+const SocketContext = createContext();
+const socket = io('https://videochatbe.up.railway.app/');
 const ContextProvider = ({ children }) => {
     const [callAccepted, setCallAccepted] = useState(false);
     const [callEnded, setCallEnded] = useState(false);
@@ -20,10 +20,8 @@ const ContextProvider = ({ children }) => {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             .then((currentStream) => {
                 setStream(currentStream);
-                if (myVideo.current) {
-                    myVideo.current.srcObject = currentStream;
 
-                }
+                myVideo.current.srcObject = currentStream;
             });
 
         socket.on('me', (id) => setMe(id));
@@ -98,5 +96,6 @@ const ContextProvider = ({ children }) => {
             {children}
         </SocketContext.Provider>
     );
-}
+};
+
 export { ContextProvider, SocketContext };

@@ -5,7 +5,7 @@ import { SocketContext } from '../socketContext'
 import { CopyIcon, PhoneIcon } from "@chakra-ui/icons"
 function Options({ children }) {
     const { me, callAccepted, name, setName, callEnded, leaveCall, callUser } = useContext(SocketContext);
-    const [idToCall, setidToCall] = useState('');
+  const [idToCall, setIdToCall] = useState('');
     return (
         <Center>
             <SimpleGrid columns={[1, 1, 2, 2]} width={["100%", "90%", "70%", "60%"]} p={"10"} gap={"70"} border={"2px"}>
@@ -20,7 +20,7 @@ function Options({ children }) {
                 <Flex direction={"column"} gap={"3"} >
                     <Heading size={"md"}>Make a Call</Heading>
                     <Text fontSize={"lg"} fontColor={"black"}>Name</Text>
-                    <Input fontColor={"black"} placeholder='ID to Call' value={idToCall} onChange={(e) => setidToCall(e.target.value)} />
+                    <Input fontColor={"black"} placeholder='ID to Call' value={idToCall} onChange={(e) => setIdToCall(e.target.value)} />
                     {
                         callAccepted && !callEnded ? (
                             <Button onClick={leaveCall} width={"100%"} color={"white"} bg={"blue"} ><Flex gap={"4"}><PhoneIcon /> <Text>Hangup</Text> </Flex>  </Button>
